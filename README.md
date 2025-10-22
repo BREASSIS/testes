@@ -1,3 +1,14 @@
+# 🌐 Portfólio de Projetos Sênior
+
+Este diagrama mostra a **arquitetura geral dos 15 projetos**, organizados por tipo e camada, com fluxos de dados e integração entre eles.
+
+**Legenda de cores:**
+- 🔵 Core / Engines
+- 🟢 Infra / Observabilidade / IaC
+- 🟡 Prod / Edge / Fullstack
+- 🟠 Lab / Experimentação / Pipelines
+
+```mermaid
 %% Portfólio C4 Style - 15 Projetos
 %% Legenda: 🔵 Core | 🟢 Infra | 🟡 Prod | 🟠 Lab
 
@@ -52,7 +63,7 @@ EventHubX --> InsightEngine
 DataForge --> CloudFlow
 PyAutoFlow --> CloudFlow
 DataForge --> InsightEngine
-PyAutoFlow --> InsightEngine 
+PyAutoFlow --> InsightEngine
 
 %% Infra conecta com Core e Prod
 CloudWeaver --> CoreVault
