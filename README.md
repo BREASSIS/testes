@@ -52,7 +52,7 @@ EventHubX --> InsightEngine
 DataForge --> CloudFlow
 PyAutoFlow --> CloudFlow
 DataForge --> InsightEngine
-PyAutoFlow --> InsightEngine
+PyAutoFlow --> InsightEngine 
 
 %% Infra conecta com Core e Prod
 CloudWeaver --> CoreVault
