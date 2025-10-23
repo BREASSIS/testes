@@ -1,68 +1,38 @@
-# 🌐 Portfólio de Projetos Sênior
+flowchart TD
+    %% Camadas principais do ResilienceLab
 
-```mermaid
-graph TD
+    subgraph TARGET["Target Services / Modules ⚫"]
+        CoreVault["CoreVault Service"]
+        PredictGo["PredictGo Service"]
+        SyncGate["SyncGate Service"]
+    end
 
-%% ==== CAMADAS SIMPLIFICADAS ====
-subgraph CORE
-    direction TB
-    CoreVault[core-corevault-clean-csharp]
-    GoBridge[core-gobridge-hex-go]
-    PredictGo[core-predictgo-serving-go]
-    SyncGate[core-syncgate-api-csharp-angular]
-    CloudFlow[core-cloudflow-orchestrator-mix]
-    DataForge[core-dataforge-pipeline-python]
-    InsightEngine[core-insightengine-ai-python]
-    EventHubX[core-eventhubx-event-go]
-end
+    subgraph APPLICATION["Application / Microservice 🟠"]
+        AppController["Experiment Controller"]
+        APIGateway["API / gRPC Gateway"]
+    end
 
-subgraph INFRA
-    direction TB
-    CloudWeaver[infra-cloudweaver-iac-go]
-    TraceMatrix[infra-tracematrix-mesh-python]
-    ResilienceLab[infra-resiliencelab-fault-csharp]
-end
+    subgraph FAULTS["Fault Injector Core 🔵"]
+        Policies["Policies Module"]
+        Simulation["Simulation Module"]
+        Observability["Observability Module"]
+    end
 
-subgraph PROD
-    direction TB
-    EdgeNodeX[prod-edgenodex-edge-go]
-    AtlasUI[prod-atlasui-fullstack-angular-csharp]
-end
+    subgraph METRICS["Metrics & Logging 🟣"]
+        Prometheus["Prometheus Metrics"]
+        Loki["Loki Logs"]
+        Tracing["OpenTelemetry Traces"]
+    end
 
-subgraph LAB
-    direction TB
-    PyConfigOps[lab-pyconfigops-modular-python]
-    PyAutoFlow[lab-pyautoflow-pipeline-python]
-end
+    subgraph REPORTS["Reports UI (Angular / Grafana) 🟢"]
+        Dashboard["Grafana Dashboard / Angular UI"]
+    end
 
-%% ==== CONEXÕES ====
-CoreVault --> CloudFlow
-CoreVault --> PredictGo
-CoreVault --> SyncGate
-CoreVault --> InsightEngine
-CoreVault --> PyAutoFlow
-CoreVault --> TraceMatrix
+    %% Fluxo de comunicação
 
-EventHubX --> CloudFlow
-EventHubX --> PredictGo
-EventHubX --> PyAutoFlow
-EventHubX --> InsightEngine
-
-DataForge --> CloudFlow
-PyAutoFlow --> CloudFlow
-DataForge --> InsightEngine
-PyAutoFlow --> InsightEngine
-
-CloudWeaver --> CoreVault
-CloudWeaver --> EdgeNodeX
-TraceMatrix --> CoreVault
-TraceMatrix --> EdgeNodeX
-ResilienceLab --> EdgeNodeX
-
-EdgeNodeX --> PredictGo
-AtlasUI --> SyncGate
-AtlasUI --> CloudFlow
-
-PyConfigOps --> CoreVault
-PyConfigOps --> CloudWeaver
-PyAutoFlow --> DataForge
+    Dashboard -->|visualiza métricas| Prometheus & Loki & Tracing
+    Prometheus & Loki & Tracing -->|coleta de dados| Observability
+    AppController -->|orquestra falhas| Policies & Simulation
+    Policies & Simulation -->|injetam falhas| CoreVault & PredictGo & SyncGate
+    Observability -->|exporta métricas/logs| Prometheus & Loki & Tracing
+    APIGateway -->|distribui comandos| AppController
